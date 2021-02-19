@@ -14,9 +14,10 @@ import javafx.scene.control.Label;
 
 public class Main extends Application {
 
+    public static Inventory database = new Inventory();
+
     public static void main(String[] args) {
         launch(args);
-
     }
 
     @Override

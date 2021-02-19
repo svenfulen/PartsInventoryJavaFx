@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.main_controller">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="800.0" style="-fx-background-color: #edf3fc;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.main_controller">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -23,16 +23,18 @@
          <padding>
             <Insets left="10.0" />
          </padding></Label>
-      <TableView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="250.0" GridPane.rowIndex="1">
+      <TableView fx:id="parts_table" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="250.0" GridPane.rowIndex="1">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn minWidth="5.0" prefWidth="29.0" text="ID" />
+          <TableColumn fx:id="part_name_column" prefWidth="100.0" text="Name" />
+            <TableColumn fx:id="part_inv_column" prefWidth="100.0" text="Inventory Level" />
+            <TableColumn fx:id="part_price_column" prefWidth="120.0" text="Price/Cost per Unit" />
         </columns>
          <GridPane.margin>
             <Insets left="25.0" right="25.0" top="30.0" />
          </GridPane.margin>
       </TableView>
-      <Label text="Parts" GridPane.rowIndex="1">
+      <Label fx:id="part_id_column" text="Parts" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>

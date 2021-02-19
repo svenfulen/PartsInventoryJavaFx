@@ -6,8 +6,9 @@ import javafx.collections.ObservableList;
 //TODO: might need to change some things to say this.allParts or this.allProducts depending on if the code works
 public class Inventory {
 
-    public static ObservableList<Part> allParts = FXCollections.observableArrayList();
-    public static ObservableList<Product> allProducts = FXCollections.observableArrayList();
+    private ObservableList<Part> allParts = FXCollections.observableArrayList();
+    private ObservableList<Product> allProducts = FXCollections.observableArrayList();
+
 
     public ObservableList<Part> getAllParts(){
         return allParts;
