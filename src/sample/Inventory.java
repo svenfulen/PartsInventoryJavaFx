@@ -89,7 +89,6 @@ public class Inventory {
         allProducts.set(index, newProduct);
     }
 
-    //TODO: fix the return value here
     public boolean deletePart(Part selectedPart){
         allParts.remove(selectedPart);
         return true;

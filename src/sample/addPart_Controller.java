@@ -9,10 +9,7 @@ public class addPart_Controller {
     /*
     FXML signatures
      */
-    @FXML private Button SavePart;
     @FXML private Button cancelButton;
-    @FXML private RadioButton radioInHouse;
-    @FXML private RadioButton radioOutsourced;
     @FXML private Label locationLabel;
     @FXML private TextField nameField;
     @FXML private TextField invField;
@@ -131,6 +128,10 @@ public class addPart_Controller {
         }
     }
 
+    /*
+    Error message function
+    Makes it easy to send an error message to the user
+     */
     private void errorMessage(String errorText){
         Alert error = new Alert(AlertType.ERROR, errorText, ButtonType.OK);
         error.showAndWait();

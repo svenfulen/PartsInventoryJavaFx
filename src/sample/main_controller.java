@@ -70,9 +70,9 @@ public class main_controller {
 
     // Remove a selected part.
     public void removePart(){
-        int selectedPartIndex = parts_table.getSelectionModel().getSelectedIndex();
+        Part selectedPart = parts_table.getSelectionModel().getSelectedItem();
         if (confirmationMessage("Are you sure you want to delete this part?")) {
-            Main.database.deletePart(Main.database.getAllParts().get(selectedPartIndex));
+            Main.database.deletePart(selectedPart);
         }
         showAllParts();
     }
@@ -95,6 +95,16 @@ public class main_controller {
         stage.setScene(new Scene(root));
         stage.show();
         stage.setOnHiding(event -> showAllParts());  // Refreshes the parts table when the window is closed.
+    }
+
+    public void addProductScreen() throws IOException {
+        FXMLLoader loadFXML = new FXMLLoader(getClass().getResource("addProduct_scene.fxml"));
+        Parent root = (Parent) loadFXML.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
+        stage.setOnHiding(event -> showAllParts());  // Refreshes the parts table when the window is closed.
+        //TODO: show all products when the window is closed, instead of parts.
     }
 
     // Makes a pop-up with buttons YES and NO, returns TRUE or FALSE
