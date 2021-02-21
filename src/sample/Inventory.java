@@ -45,8 +45,8 @@ public class Inventory {
                 return allPart;
             }
         }
-        //TODO: return all products if no matches are found.
-        return allParts.get(0);
+        // Return 2 billion.  If id = 2 billion, no results.
+        return new InHouse(2000000000, "No Parts Found", 0, 0, 0, 0, 0);
     }
 
     public Product lookupProduct(int productId){

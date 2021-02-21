@@ -25,7 +25,7 @@ public class addPart_Controller {
     /*
     Part ID auto gen
     */
-    public static int nextPartId = 0; //Initialized to 0 so the first Part ID will be 1.
+    public static int nextPartId = Main.database.getAllParts().size(); //The next part ID will be the size of all parts + 1.
     public static int autoGenPartId(){
         nextPartId++;
         return nextPartId;

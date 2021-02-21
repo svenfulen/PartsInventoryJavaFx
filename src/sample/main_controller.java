@@ -33,6 +33,7 @@ public class main_controller {
 
     // Fill the Parts table with data.  Can be used to refresh the table.
     public void showAllParts(){
+        parts_table.setPlaceholder(new Label("Part not found"));
         part_id_column.setCellValueFactory(new PropertyValueFactory<>("id"));  //Part ID column
         part_name_column.setCellValueFactory(new PropertyValueFactory<>("name"));  // Name column
         part_inv_column.setCellValueFactory(new PropertyValueFactory<>("stock"));  // Inv column
@@ -54,7 +55,15 @@ public class main_controller {
         }
 
         if(resultsList.size() > 0){
-            parts_table.getItems().setAll(resultsList);
+            if(resultsList.get(0).getId() != 2000000000) {
+                parts_table.getItems().setAll(resultsList);
+            }
+            else{
+                parts_table.getItems().clear();
+            }
+        }
+        else {
+            parts_table.getItems().clear();
         }
     }
 

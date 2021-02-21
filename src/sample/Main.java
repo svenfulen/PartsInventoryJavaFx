@@ -21,6 +21,12 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        // Load sample data into the table.
+        database.addPart(new Outsourced(1, "Tool Box", 0.95, 300, 30, 1000, "U-SQUIGGLE Plastic Boxes"));
+        database.addPart(new Outsourced(2, "Plastic Box - Transparent", 0.95, 300, 30, 1000, "U-SQUIGGLE Plastic Boxes"));
+        database.addPart(new InHouse(3, "Hammer", 0.95, 300, 30, 1000, 24873));
+        database.addPart(new InHouse(4, "Screwdriver", 0.95, 300, 30, 1000, 24874));
+        database.addPart(new InHouse(5, "Nail", 0.95, 300, 30, 1000, 17973));
 
         Parent main = FXMLLoader.load(getClass().getResource("sample.fxml"));
 
