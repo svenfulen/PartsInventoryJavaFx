@@ -5,7 +5,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
-public class addPart_Controller {
+public class modifyPart_Controller {
     /*
     FXML signatures
      */
@@ -20,17 +20,44 @@ public class addPart_Controller {
     @FXML private TextField minField;
     @FXML private TextField maxField;
     @FXML private TextField partTypeField;
+    @FXML private TextField idField;
 
 
-    /*
-    Part ID auto gen
-    */
-    public static int nextPartId = Main.database.getAllParts().size(); //The next part ID will be the size of all parts + 1.
-    public static int autoGenPartId(){
-        nextPartId++;
-        return nextPartId;
+    static int selectedPartIndex;
+
+    static void setSelectedPartIndex(int index) {
+        selectedPartIndex = index;
     }
 
+    public void initialize(){
+        if(Main.database.getAllParts().get(selectedPartIndex) instanceof InHouse){
+            int selectedMachineID = ((InHouse) Main.database.getAllParts().get(selectedPartIndex)).getMachineId();
+            boolean isOutsourced = false;
+            radioInHouse.setSelected(true);
+            radioOutsourced.setSelected(false);
+            partTypeField.setText(String.valueOf(selectedMachineID));
+        }
+        if(Main.database.getAllParts().get(selectedPartIndex) instanceof Outsourced){
+            String selectedCompanyName = ((Outsourced) Main.database.getAllParts().get(selectedPartIndex)).getCompanyName();
+            boolean isOutsourced = true;
+            radioInHouse.setSelected(false);
+            radioOutsourced.setSelected(true);
+            partTypeField.setText(selectedCompanyName);
+        }
+        int selectedPartId = Main.database.getAllParts().get(selectedPartIndex).getId();
+        String selectedPartName = Main.database.getAllParts().get(selectedPartIndex).getName();
+        double selectedPartPrice = Main.database.getAllParts().get(selectedPartIndex).getPrice();
+        int selectedPartStock = Main.database.getAllParts().get(selectedPartIndex).getStock();
+        int selectedPartMin = Main.database.getAllParts().get(selectedPartIndex).getMin();
+        int selectedPartMax = Main.database.getAllParts().get(selectedPartIndex).getMax();
+
+        idField.setText(String.valueOf(selectedPartId));
+        nameField.setText(selectedPartName);
+        priceField.setText(String.valueOf(selectedPartPrice));
+        invField.setText(String.valueOf(selectedPartStock));
+        minField.setText(String.valueOf(selectedPartMin));
+        maxField.setText(String.valueOf(selectedPartMax));
+    }
 
     /*
     Radio Buttons
@@ -63,6 +90,8 @@ public class addPart_Controller {
     public void savePart(){
         boolean partCanSave = true;
 
+        int partId = 0;
+        int partIndex = selectedPartIndex;
         String partName = this.nameField.getText();
         int inStock = 0;
         double price = 0.0;
@@ -117,15 +146,15 @@ public class addPart_Controller {
         //This block can only execute if the form is filled out correctly.
         if(partCanSave){
             if (partIsOutsourced) {
-                Outsourced newOutsourcedPart = new Outsourced(autoGenPartId(), partName, price, inStock, min, max, companyName);
-                Main.database.addPart(newOutsourcedPart);
-                System.out.println("Successfully added Outsourced part");
+                Outsourced newOutsourcedPart = new Outsourced(partId, partName, price, inStock, min, max, companyName);
+                Main.database.updatePart(partIndex, newOutsourcedPart);
+                System.out.println("Successfully updated Outsourced part");
                 cancel(); //closes the window
             }
             if(!partIsOutsourced) {
-                InHouse newInHousePart = new InHouse(autoGenPartId(), partName, price, inStock, min, max, machineID);
-                sample.Main.database.addPart(newInHousePart);
-                System.out.println("Successfully added In-House part");
+                InHouse newInHousePart = new InHouse(partId, partName, price, inStock, min, max, machineID);
+                sample.Main.database.updatePart(partIndex, newInHousePart);
+                System.out.println("Successfully updated In-House part");
                 cancel(); //closes the window
             }
         }

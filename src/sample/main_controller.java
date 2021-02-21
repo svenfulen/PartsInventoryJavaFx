@@ -26,6 +26,7 @@ public class main_controller {
     @FXML private TableColumn<Part, Integer> part_inv_column;
     @FXML private TableColumn<Part, Double> part_price_column;
 
+
     // Everything to do when the Scene starts.
     public void initialize() {
         showAllParts();
@@ -79,6 +80,16 @@ public class main_controller {
     // Open the Add Part popup window.
     public void addPartScreen() throws IOException {
         FXMLLoader loadFXML = new FXMLLoader(getClass().getResource("addPart_scene.fxml"));
+        Parent root = (Parent) loadFXML.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
+        stage.setOnHiding(event -> showAllParts());  // Refreshes the parts table when the window is closed.
+    }
+
+    public void modifyPartScreen() throws IOException {
+        FXMLLoader loadFXML = new FXMLLoader(getClass().getResource("modifyPart_scene.fxml"));
+        modifyPart_Controller.selectedPartIndex = parts_table.getSelectionModel().getSelectedIndex();
         Parent root = (Parent) loadFXML.load();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
