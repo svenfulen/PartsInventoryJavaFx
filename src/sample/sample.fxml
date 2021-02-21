@@ -82,5 +82,10 @@
             <Insets left="25.0" right="25.0" top="30.0" />
          </GridPane.margin>
       </TableView>
+      <TextField fx:id="part_search_bar" onKeyTyped="#searchParts" promptText="Search by ID or Name" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets bottom="200.0" left="200.0" right="25.0" />
+         </GridPane.margin>
+      </TextField>
    </children>
 </GridPane>

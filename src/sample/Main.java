@@ -22,8 +22,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
-        database.addPart(new Outsourced(0, "Name", 1.00, 1,1,2, "Company X"));
-
         Parent main = FXMLLoader.load(getClass().getResource("sample.fxml"));
 
         // Putting the layout container in the scene.

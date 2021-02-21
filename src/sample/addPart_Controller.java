@@ -9,28 +9,17 @@ public class addPart_Controller {
     /*
     FXML signatures
      */
-    @FXML
-    private Button SavePart;
-    @FXML
-    private Button cancelButton;
-    @FXML
-    private RadioButton radioInHouse;
-    @FXML
-    private RadioButton radioOutsourced;
-    @FXML
-    private Label locationLabel;
-    @FXML
-    private TextField nameField;
-    @FXML
-    private TextField invField;
-    @FXML
-    private TextField priceField;
-    @FXML
-    private TextField minField;
-    @FXML
-    private TextField maxField;
-    @FXML
-    private TextField partTypeField;
+    @FXML private Button SavePart;
+    @FXML private Button cancelButton;
+    @FXML private RadioButton radioInHouse;
+    @FXML private RadioButton radioOutsourced;
+    @FXML private Label locationLabel;
+    @FXML private TextField nameField;
+    @FXML private TextField invField;
+    @FXML private TextField priceField;
+    @FXML private TextField minField;
+    @FXML private TextField maxField;
+    @FXML private TextField partTypeField;
 
 
     /*
@@ -117,27 +106,14 @@ public class addPart_Controller {
         if(partCanSave){
             if (partIsOutsourced) {
                 Outsourced newOutsourcedPart = new Outsourced(autoGenPartId(), partName, price, inStock, min, max, companyName);
-                System.out.println(newOutsourcedPart.getId());
-                System.out.println(newOutsourcedPart.getName());
-                System.out.println(newOutsourcedPart.getPrice());
-                System.out.println(newOutsourcedPart.getStock());
-                System.out.println(newOutsourcedPart.getMin());
-                System.out.println(newOutsourcedPart.getMax());
-                System.out.println(newOutsourcedPart.getCompanyName());
                 Main.database.addPart(newOutsourcedPart);
-                System.out.println(Main.database.getAllParts().get(0).getName());
+                System.out.println("Successfully added Outsourced part");
                 cancel(); //closes the window
             }
             if(!partIsOutsourced) {
                 InHouse newInHousePart = new InHouse(autoGenPartId(), partName, price, inStock, min, max, machineID);
-                System.out.println(newInHousePart.getId());
-                System.out.println(newInHousePart.getName());
-                System.out.println(newInHousePart.getPrice());
-                System.out.println(newInHousePart.getStock());
-                System.out.println(newInHousePart.getMin());
-                System.out.println(newInHousePart.getMax());
-                System.out.println(newInHousePart.getMachineId());
                 sample.Main.database.addPart(newInHousePart);
+                System.out.println("Successfully added In-House part");
                 cancel(); //closes the window
             }
         }
