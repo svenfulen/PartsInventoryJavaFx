@@ -15,13 +15,14 @@ import javafx.scene.control.Label;
 public class Main extends Application {
 
     public static Inventory database = new Inventory();
-
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+
+        database.addPart(new Outsourced(0, "Name", 1.00, 1,1,2, "Company X"));
 
         Parent main = FXMLLoader.load(getClass().getResource("sample.fxml"));
 

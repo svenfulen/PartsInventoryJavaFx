@@ -23,18 +23,7 @@
          <padding>
             <Insets left="10.0" />
          </padding></Label>
-      <TableView fx:id="parts_table" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="250.0" GridPane.rowIndex="1">
-        <columns>
-          <TableColumn minWidth="5.0" prefWidth="29.0" text="ID" />
-          <TableColumn fx:id="part_name_column" prefWidth="100.0" text="Name" />
-            <TableColumn fx:id="part_inv_column" prefWidth="100.0" text="Inventory Level" />
-            <TableColumn fx:id="part_price_column" prefWidth="120.0" text="Price/Cost per Unit" />
-        </columns>
-         <GridPane.margin>
-            <Insets left="25.0" right="25.0" top="30.0" />
-         </GridPane.margin>
-      </TableView>
-      <Label fx:id="part_id_column" text="Parts" GridPane.rowIndex="1">
+      <Label text="Parts" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>
@@ -82,5 +71,16 @@
             <Insets right="25.0" />
          </GridPane.margin>
       </ButtonBar>
+      <TableView fx:id="parts_table" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="250.0" GridPane.rowIndex="1">
+        <columns>
+          <TableColumn fx:id="part_id_column" minWidth="5.0" prefWidth="29.0" text="ID" />
+          <TableColumn fx:id="part_name_column" prefWidth="100.0" text="Name" />
+            <TableColumn fx:id="part_inv_column" prefWidth="100.0" text="Inventory Level" />
+            <TableColumn fx:id="part_price_column" prefWidth="120.0" text="Price/Cost per Unit" />
+        </columns>
+         <GridPane.margin>
+            <Insets left="25.0" right="25.0" top="30.0" />
+         </GridPane.margin>
+      </TableView>
    </children>
 </GridPane>

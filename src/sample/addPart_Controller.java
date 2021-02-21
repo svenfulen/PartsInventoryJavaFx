@@ -124,7 +124,8 @@ public class addPart_Controller {
                 System.out.println(newOutsourcedPart.getMin());
                 System.out.println(newOutsourcedPart.getMax());
                 System.out.println(newOutsourcedPart.getCompanyName());
-                sample.Main.database.addPart(newOutsourcedPart);
+                Main.database.addPart(newOutsourcedPart);
+                System.out.println(Main.database.getAllParts().get(0).getName());
                 cancel(); //closes the window
             }
             if(!partIsOutsourced) {
@@ -147,4 +148,5 @@ public class addPart_Controller {
         error.showAndWait();
         //if(error.getResult() == ButtonType.OK){}
     }
+
 }
