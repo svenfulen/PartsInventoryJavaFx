@@ -29,17 +29,20 @@ public class modifyPart_Controller {
         selectedPartIndex = index;
     }
 
+    private boolean partIsOutsourced = true;
+
     public void initialize(){
+
         if(Main.database.getAllParts().get(selectedPartIndex) instanceof InHouse){
             int selectedMachineID = ((InHouse) Main.database.getAllParts().get(selectedPartIndex)).getMachineId();
-            boolean isOutsourced = false;
+            partIsOutsourced = false;
             radioInHouse.setSelected(true);
             radioOutsourced.setSelected(false);
             partTypeField.setText(String.valueOf(selectedMachineID));
         }
         if(Main.database.getAllParts().get(selectedPartIndex) instanceof Outsourced){
             String selectedCompanyName = ((Outsourced) Main.database.getAllParts().get(selectedPartIndex)).getCompanyName();
-            boolean isOutsourced = true;
+            partIsOutsourced = true;
             radioInHouse.setSelected(false);
             radioOutsourced.setSelected(true);
             partTypeField.setText(selectedCompanyName);
@@ -62,7 +65,6 @@ public class modifyPart_Controller {
     /*
     Radio Buttons
      */
-    private boolean partIsOutsourced = false;
 
     public void setPartOutsourced(){
         if (!partIsOutsourced){
@@ -90,7 +92,7 @@ public class modifyPart_Controller {
     public void savePart(){
         boolean partCanSave = true;
 
-        int partId = 0;
+        int partId = Main.database.getAllParts().get(selectedPartIndex).getId();;
         int partIndex = selectedPartIndex;
         String partName = this.nameField.getText();
         int inStock = 0;
