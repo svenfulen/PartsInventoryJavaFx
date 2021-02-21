@@ -48,7 +48,7 @@
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="2">
         <buttons>
             <Button mnemonicParsing="false" onAction="#addPartScreen" style="-fx-background-color: #8fe39a; -fx-border-width: 1.5px; -fx-border-color: black; -fx-border-radius: 8px; -fx-background-radius: 10px; -fx-background-insets: 0.7px;" text="Add" />
-             <Button mnemonicParsing="false" style="-fx-background-color: ff6e6e; -fx-border-width: 1.5px; -fx-border-color: black; -fx-border-radius: 8px; -fx-background-radius: 10px; -fx-background-insets: 0.7px;" text="Remove" />
+             <Button mnemonicParsing="false" onAction="#removePart" style="-fx-background-color: ff6e6e; -fx-border-width: 1.5px; -fx-border-color: black; -fx-border-radius: 8px; -fx-background-radius: 10px; -fx-background-insets: 0.7px;" text="Remove" />
              <Button mnemonicParsing="false" style="-fx-background-color: #ffaa6e; -fx-border-width: 1.5px; -fx-border-color: black; -fx-border-radius: 8px; -fx-background-radius: 10px; -fx-background-insets: 0.7px;" text="Modify" />
         </buttons>
          <GridPane.margin>

@@ -67,6 +67,15 @@ public class main_controller {
         }
     }
 
+    // Remove a selected part.
+    public void removePart(){
+        int selectedPartIndex = parts_table.getSelectionModel().getSelectedIndex();
+        if (confirmationMessage("Are you sure you want to delete this part?")) {
+            Main.database.deletePart(Main.database.getAllParts().get(selectedPartIndex));
+        }
+        showAllParts();
+    }
+
     // Open the Add Part popup window.
     public void addPartScreen() throws IOException {
         FXMLLoader loadFXML = new FXMLLoader(getClass().getResource("addPart_scene.fxml"));
@@ -76,4 +85,16 @@ public class main_controller {
         stage.show();
         stage.setOnHiding(event -> showAllParts());  // Refreshes the parts table when the window is closed.
     }
+
+    // Makes a pop-up with buttons YES and NO, returns TRUE or FALSE
+    private boolean confirmationMessage(String notificationText){
+        Alert error = new Alert(Alert.AlertType.CONFIRMATION, notificationText, ButtonType.YES, ButtonType.NO);
+        error.showAndWait();
+        return error.getResult() == ButtonType.YES;
+    }
+
+
+
+
 }
+
