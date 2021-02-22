@@ -105,40 +105,40 @@ public class modifyPart_Controller {
         try{ inStock = Integer.parseInt(this.invField.getText()); }
         catch(NumberFormatException notAnInt){
             partCanSave = false;
-            errorMessage("Please enter a number into the Inv field.");
+            Main.errorMessage("Please enter a number into the Inv field.");
         }
         try{ price = Double.parseDouble(this.priceField.getText()); }
         catch(NumberFormatException | NullPointerException notADouble) {
             partCanSave = false;
-            errorMessage("Please enter a number into the Price/Cost field.");
+            Main.errorMessage("Please enter a number into the Price/Cost field.");
         }
         try{ min = Integer.parseInt(this.minField.getText()); }
         catch(NumberFormatException notAnInt){
             partCanSave = false;
-            errorMessage("Please enter a number into the Min field.");
+            Main.errorMessage("Please enter a number into the Min field.");
         }
         try{ max = Integer.parseInt(this.maxField.getText()); }
         catch(NumberFormatException notAnInt){
             partCanSave = false;
-            errorMessage("Please enter a number into the Max field.");
+            Main.errorMessage("Please enter a number into the Max field.");
         }
 
         // Checking inv stuff.
         if (min > max) {
             partCanSave = false;
-            errorMessage("Max must be greater than Min.");
+            Main.errorMessage("Max must be greater than Min.");
         }
 
         if (inStock < min | inStock > max) {
             partCanSave = false;
-            errorMessage("Inv must be between Min and Max values.");
+            Main.errorMessage("Inv must be between Min and Max values.");
         }
 
         if (!partIsOutsourced){
             try{ machineID = Integer.parseInt(this.partTypeField.getText()); }
             catch(NumberFormatException notAnInt){
                 partCanSave = false;
-                errorMessage("Please enter a valid number into the Machine ID field.");
+                Main.errorMessage("Please enter a valid number into the Machine ID field.");
             }
         }
         if(partIsOutsourced){
@@ -162,10 +162,5 @@ public class modifyPart_Controller {
         }
     }
 
-    private void errorMessage(String errorText){
-        Alert error = new Alert(AlertType.ERROR, errorText, ButtonType.OK);
-        error.showAndWait();
-        //if(error.getResult() == ButtonType.OK){}
-    }
 
 }

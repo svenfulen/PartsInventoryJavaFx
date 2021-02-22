@@ -31,10 +31,12 @@
             <Insets bottom="200.0" left="30.0" />
          </padding>
       </Label>
-      <TableView maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <TableView fx:id="products_table" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
         <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
+          <TableColumn fx:id="product_id_column" prefWidth="29.0" text="ID" />
+          <TableColumn fx:id="product_name_column" prefWidth="94.0" text="Name" />
+            <TableColumn fx:id="product_inv_column" prefWidth="102.0" text="Inventory Level" />
+            <TableColumn fx:id="product_price_column" prefWidth="123.0" text="Price/Cost per Unit" />
         </columns>
          <GridPane.margin>
             <Insets left="25.0" right="25.0" top="30.0" />
@@ -57,7 +59,7 @@
       </ButtonBar>
       <ButtonBar prefHeight="40.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
         <buttons>
-             <Button mnemonicParsing="false" style="-fx-background-color: #8fe39a; -fx-border-width: 1.5px; -fx-border-color: black; -fx-border-radius: 8px; -fx-background-radius: 10px; -fx-background-insets: 0.7px;" text="Add">
+             <Button mnemonicParsing="false" onAction="#addProductScreen" style="-fx-background-color: #8fe39a; -fx-border-width: 1.5px; -fx-border-color: black; -fx-border-radius: 8px; -fx-background-radius: 10px; -fx-background-insets: 0.7px;" text="Add">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets></Button>
@@ -83,6 +85,11 @@
          </GridPane.margin>
       </TableView>
       <TextField fx:id="part_search_bar" onKeyTyped="#searchParts" promptText="Search by ID or Name" GridPane.rowIndex="1">
+         <GridPane.margin>
+            <Insets bottom="200.0" left="200.0" right="25.0" />
+         </GridPane.margin>
+      </TextField>
+      <TextField fx:id="product_search_bar" promptText="Search by ID or Name" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets bottom="200.0" left="200.0" right="25.0" />
          </GridPane.margin>

@@ -6,6 +6,8 @@ package sample;
 import javafx.fxml.FXMLLoader;
 import javafx.application.Application;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
 import javafx.scene.Parent;
@@ -42,6 +44,20 @@ public class Main extends Application {
         //Show the window.
         primaryStage.show();
 
+    }
+
+    // Makes a YES or NO confirmation message.
+    public static boolean confirmationMessage(String notificationText){
+        Alert error = new Alert(Alert.AlertType.CONFIRMATION, notificationText, ButtonType.YES, ButtonType.NO);
+        error.showAndWait();
+        return error.getResult() == ButtonType.YES;
+    }
+
+    // Makes an error message.
+    public static void errorMessage(String errorText){
+        Alert error = new Alert(Alert.AlertType.ERROR, errorText, ButtonType.OK);
+        error.showAndWait();
+        //if(error.getResult() == ButtonType.OK){}
     }
 
 }

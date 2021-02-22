@@ -16,7 +16,6 @@ import javafx.stage.Stage;
 
 public class main_controller {
     // Parts Controls
-    @FXML private Button add_part;
     @FXML private TextField part_search_bar;
 
     // Parts table
@@ -26,10 +25,20 @@ public class main_controller {
     @FXML private TableColumn<Part, Integer> part_inv_column;
     @FXML private TableColumn<Part, Double> part_price_column;
 
+    //Products controls
+    @FXML private TextField product_search_bar;
+
+    //Products table
+    @FXML private TableView<Product> products_table;  //Makes the Products table use Product objects.
+    @FXML private TableColumn<Product, Integer> product_id_column;
+    @FXML private TableColumn<Product, String> product_name_column;
+    @FXML private TableColumn<Product, Integer> product_inv_column;
+    @FXML private TableColumn<Product, Double> product_price_column;
 
     // Everything to do when the Scene starts.
     public void initialize() {
         showAllParts();
+        showAllProducts();
     }
 
     // Fill the Parts table with data.  Can be used to refresh the table.
@@ -40,6 +49,16 @@ public class main_controller {
         part_inv_column.setCellValueFactory(new PropertyValueFactory<>("stock"));  // Inv column
         part_price_column.setCellValueFactory(new PropertyValueFactory<>("price"));  // Price column
         parts_table.getItems().setAll(Main.database.getAllParts());  // Use the parts database to output to the table.
+    }
+
+    // Fill the Products table with data.  Can be used to refresh the table.
+    public void showAllProducts(){
+        products_table.setPlaceholder(new Label("Product not found"));
+        product_id_column.setCellValueFactory(new PropertyValueFactory<>("id"));  //Product ID column
+        product_name_column.setCellValueFactory(new PropertyValueFactory<>("name"));  // Name column
+        product_inv_column.setCellValueFactory(new PropertyValueFactory<>("stock"));  // Inv column
+        product_price_column.setCellValueFactory(new PropertyValueFactory<>("price"));  // Price column
+        products_table.getItems().setAll(Main.database.getAllProducts());  // Use the products database to output to the table.
     }
 
     //Called when part is searched using the search bar.
@@ -71,7 +90,7 @@ public class main_controller {
     // Remove a selected part.
     public void removePart(){
         Part selectedPart = parts_table.getSelectionModel().getSelectedItem();
-        if (confirmationMessage("Are you sure you want to delete this part?")) {
+        if (Main.confirmationMessage("Are you sure you want to delete this part?")) {
             Main.database.deletePart(selectedPart);
         }
         showAllParts();
@@ -103,16 +122,10 @@ public class main_controller {
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
         stage.show();
-        stage.setOnHiding(event -> showAllParts());  // Refreshes the parts table when the window is closed.
-        //TODO: show all products when the window is closed, instead of parts.
+        stage.setOnHiding(event -> showAllProducts());  // Refreshes the parts table when the window is closed.
     }
 
-    // Makes a pop-up with buttons YES and NO, returns TRUE or FALSE
-    private boolean confirmationMessage(String notificationText){
-        Alert error = new Alert(Alert.AlertType.CONFIRMATION, notificationText, ButtonType.YES, ButtonType.NO);
-        error.showAndWait();
-        return error.getResult() == ButtonType.YES;
-    }
+
 
 
 

@@ -127,6 +127,57 @@ public class addProduct_Controller {
     }
 
     public void saveProduct(){
+        boolean productCanSave = true;
 
+        String partName = this.product_name_field.getText();
+        int inStock = 0;
+        double price = 0.0;
+        int min = 0;
+        int max = 0;
+
+        try{ inStock = Integer.parseInt(this.product_inv_field.getText()); }
+        catch(NumberFormatException notAnInt){
+            productCanSave = false;
+            Main.errorMessage("Please enter a number into the Inv field.");
+        }
+        try{ price = Double.parseDouble(this.product_price_field.getText()); }
+        catch(NumberFormatException | NullPointerException notADouble) {
+            productCanSave = false;
+            Main.errorMessage("Please enter a number into the Price/Cost field.");
+        }
+        try{ min = Integer.parseInt(this.product_min_field.getText()); }
+        catch(NumberFormatException notAnInt){
+            productCanSave = false;
+            Main.errorMessage("Please enter a number into the Min field.");
+        }
+        try{ max = Integer.parseInt(this.product_max_field.getText()); }
+        catch(NumberFormatException notAnInt){
+            productCanSave = false;
+            Main.errorMessage("Please enter a number into the Max field.");
+        }
+
+        // Checking inv stuff.
+        if (min > max) {
+            productCanSave = false;
+            Main.errorMessage("Max must be greater than Min.");
+        }
+
+        if (inStock < min | inStock > max) {
+            productCanSave = false;
+            Main.errorMessage("Inv must be between Min and Max values.");
+        }
+
+        //This block can only execute if the form is filled out correctly.
+        if(productCanSave){
+            Product newProduct = new Product(autoGenProductId(), partName, price, inStock, min, max);
+            // Adds all associated parts to the product.
+            for(int i = 0; i < newAssociatedPartsList.size(); i++){
+                newProduct.addAssociatedPart(newAssociatedPartsList.get(i));
+            }
+            Main.database.addProduct(newProduct);
+            System.out.println("Successfully added Product");
+            cancel(); //closes the window
+        }
     }
+
 }
