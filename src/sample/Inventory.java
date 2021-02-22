@@ -87,14 +87,22 @@ public class Inventory {
         allProducts.set(index, newProduct);
     }
 
+    //FUTURE ENHANCEMENT: have permanent parts that cannot be deleted, to be set by an admin
+    //if the part is permanent, the error could say "The part could not be deleted because it is permanent."
     public boolean deletePart(Part selectedPart){
-        allParts.remove(selectedPart);
-        return true;
+        if(allParts.remove(selectedPart)) {
+            return true;
+        }
+        Main.errorMessage("The program was unable to delete the selected part.");
+        return false;
     }
 
     public boolean deleteProduct(Product selectedProduct){
-        allProducts.remove(selectedProduct);
-        return true;
+        if(allProducts.remove(selectedProduct)) {
+            return true;
+        }
+        Main.errorMessage("The program was unable to delete the selected product.");
+        return false;
     }
 
 }

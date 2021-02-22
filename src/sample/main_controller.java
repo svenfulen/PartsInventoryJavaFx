@@ -116,16 +116,27 @@ public class main_controller {
     // Remove a selected part.
     public void removePart(){
         Part selectedPart = parts_table.getSelectionModel().getSelectedItem();
-        if (Main.confirmationMessage("Are you sure you want to delete this part?")) {
-            Main.database.deletePart(selectedPart);
+        if (selectedPart != null) {
+            if (Main.confirmationMessage("Are you sure you want to delete this part?")) {
+                Main.database.deletePart(selectedPart);
+            }
         }
         showAllParts();
     }
 
     public void removeProduct(){
         Product selectedProduct = products_table.getSelectionModel().getSelectedItem();
-        if (Main.confirmationMessage("Are you sure you want to delete this part?")) {
-            Main.database.deleteProduct(selectedProduct);
+        if (selectedProduct != null) {
+            if (selectedProduct.getAllAssociatedParts().size() > 0) {
+                if (Main.confirmationMessage("This product has parts associated. Are you sure you want to delete it?")) {
+                    Main.database.deleteProduct(selectedProduct);
+                }
+            }
+            else {
+                if (Main.confirmationMessage("Are you sure you want to delete this product?")) {
+                    Main.database.deleteProduct(selectedProduct);
+                }
+            }
         }
         showAllProducts();
     }
@@ -140,14 +151,18 @@ public class main_controller {
         stage.setOnHiding(event -> showAllParts());  // Refreshes the parts table when the window is closed.
     }
 
+    //RUNTIME ERROR fixed by only completing function if selected not null
     public void modifyPartScreen() throws IOException {
-        FXMLLoader loadFXML = new FXMLLoader(getClass().getResource("modifyPart_scene.fxml"));
-        modifyPart_Controller.selectedPart = parts_table.getSelectionModel().getSelectedItem();
-        Parent root = (Parent) loadFXML.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
-        stage.setOnHiding(event -> showAllParts());  // Refreshes the parts table when the window is closed.
+        Part selectedPart = parts_table.getSelectionModel().getSelectedItem();
+        if (selectedPart != null) {
+            FXMLLoader loadFXML = new FXMLLoader(getClass().getResource("modifyPart_scene.fxml"));
+            modifyPart_Controller.selectedPart = selectedPart;
+            Parent root = (Parent) loadFXML.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+            stage.setOnHiding(event -> showAllParts());  // Refreshes the parts table when the window is closed.
+        }
     }
 
     public void addProductScreen() throws IOException {
@@ -159,14 +174,18 @@ public class main_controller {
         stage.setOnHiding(event -> showAllProducts());  // Refreshes the parts table when the window is closed.
     }
 
+    //RUNTIME ERROR fixed by only completing function if selected not null
     public void modifyProductScreen() throws IOException {
-        FXMLLoader loadFXML = new FXMLLoader(getClass().getResource("modifyProduct_scene.fxml"));
-        modifyProduct_Controller.selectedProduct = products_table.getSelectionModel().getSelectedItem();
-        Parent root = (Parent) loadFXML.load();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.show();
-        stage.setOnHiding(event -> showAllProducts());  // Refreshes the parts table when the window is closed.
+        Product selectedProduct = products_table.getSelectionModel().getSelectedItem();
+        if (selectedProduct != null) {
+            FXMLLoader loadFXML = new FXMLLoader(getClass().getResource("modifyProduct_scene.fxml"));
+            modifyProduct_Controller.selectedProduct = selectedProduct;
+            Parent root = (Parent) loadFXML.load();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.show();
+            stage.setOnHiding(event -> showAllProducts());  // Refreshes the parts table when the window is closed.
+        }
     }
 
 
