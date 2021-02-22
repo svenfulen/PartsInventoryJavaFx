@@ -23,36 +23,32 @@ public class modifyPart_Controller {
     @FXML private TextField idField;
 
 
-    static int selectedPartIndex;
-
-    static void setSelectedPartIndex(int index) {
-        selectedPartIndex = index;
-    }
+    static Part selectedPart;
 
     private boolean partIsOutsourced = true;
 
     public void initialize(){
 
-        if(Main.database.getAllParts().get(selectedPartIndex) instanceof InHouse){
-            int selectedMachineID = ((InHouse) Main.database.getAllParts().get(selectedPartIndex)).getMachineId();
+        if((selectedPart) instanceof InHouse){
+            int selectedMachineID = ((InHouse) selectedPart).getMachineId();
             partIsOutsourced = false;
             radioInHouse.setSelected(true);
             radioOutsourced.setSelected(false);
             partTypeField.setText(String.valueOf(selectedMachineID));
         }
-        if(Main.database.getAllParts().get(selectedPartIndex) instanceof Outsourced){
-            String selectedCompanyName = ((Outsourced) Main.database.getAllParts().get(selectedPartIndex)).getCompanyName();
+        if((selectedPart) instanceof Outsourced){
+            String selectedCompanyName = ((Outsourced) selectedPart).getCompanyName();
             partIsOutsourced = true;
             radioInHouse.setSelected(false);
             radioOutsourced.setSelected(true);
             partTypeField.setText(selectedCompanyName);
         }
-        int selectedPartId = Main.database.getAllParts().get(selectedPartIndex).getId();
-        String selectedPartName = Main.database.getAllParts().get(selectedPartIndex).getName();
-        double selectedPartPrice = Main.database.getAllParts().get(selectedPartIndex).getPrice();
-        int selectedPartStock = Main.database.getAllParts().get(selectedPartIndex).getStock();
-        int selectedPartMin = Main.database.getAllParts().get(selectedPartIndex).getMin();
-        int selectedPartMax = Main.database.getAllParts().get(selectedPartIndex).getMax();
+        int selectedPartId = selectedPart.getId();
+        String selectedPartName = selectedPart.getName();
+        double selectedPartPrice = selectedPart.getPrice();
+        int selectedPartStock = selectedPart.getStock();
+        int selectedPartMin = selectedPart.getMin();
+        int selectedPartMax = selectedPart.getMax();
 
         idField.setText(String.valueOf(selectedPartId));
         nameField.setText(selectedPartName);
@@ -92,8 +88,8 @@ public class modifyPart_Controller {
     public void savePart(){
         boolean partCanSave = true;
 
-        int partId = Main.database.getAllParts().get(selectedPartIndex).getId();;
-        int partIndex = selectedPartIndex;
+        int partId = selectedPart.getId();;
+        int partIndex = Main.database.getAllParts().indexOf(selectedPart);
         String partName = this.nameField.getText();
         int inStock = 0;
         double price = 0.0;

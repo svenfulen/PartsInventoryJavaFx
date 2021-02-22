@@ -63,8 +63,8 @@
                <opaqueInsets>
                   <Insets />
                </opaqueInsets></Button>
-             <Button mnemonicParsing="false" style="-fx-background-color: ff6e6e; -fx-border-width: 1.5px; -fx-border-color: black; -fx-border-radius: 8px; -fx-background-radius: 10px; -fx-background-insets: 0.7px;" text="Remove" />
-             <Button mnemonicParsing="false" style="-fx-background-color: #ffaa6e; -fx-border-width: 1.5px; -fx-border-color: black; -fx-border-radius: 8px; -fx-background-radius: 10px; -fx-background-insets: 0.7px;" text="Modify" />
+             <Button mnemonicParsing="false" onAction="#removeProduct" style="-fx-background-color: ff6e6e; -fx-border-width: 1.5px; -fx-border-color: black; -fx-border-radius: 8px; -fx-background-radius: 10px; -fx-background-insets: 0.7px;" text="Remove" />
+             <Button mnemonicParsing="false" onAction="#modifyProductScreen" style="-fx-background-color: #ffaa6e; -fx-border-width: 1.5px; -fx-border-color: black; -fx-border-radius: 8px; -fx-background-radius: 10px; -fx-background-insets: 0.7px;" text="Modify" />
         </buttons>
          <opaqueInsets>
             <Insets right="30.0" />
@@ -89,7 +89,7 @@
             <Insets bottom="200.0" left="200.0" right="25.0" />
          </GridPane.margin>
       </TextField>
-      <TextField fx:id="product_search_bar" promptText="Search by ID or Name" GridPane.columnIndex="1" GridPane.rowIndex="1">
+      <TextField fx:id="product_search_bar" onKeyTyped="#searchProducts" promptText="Search by ID or Name" GridPane.columnIndex="1" GridPane.rowIndex="1">
          <GridPane.margin>
             <Insets bottom="200.0" left="200.0" right="25.0" />
          </GridPane.margin>

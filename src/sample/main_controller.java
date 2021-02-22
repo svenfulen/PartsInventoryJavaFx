@@ -87,6 +87,32 @@ public class main_controller {
         }
     }
 
+    //Called when product is searched using the search bar.
+    public void searchProducts(){
+        String input = product_search_bar.getText();  // The text that is input to the search bar.
+        javafx.collections.ObservableList<Product> resultsList = FXCollections.observableArrayList();
+
+        // If the input text cannot be converted to an int, search by string.
+        try {
+            int intInput = Integer.parseInt(input);
+            resultsList.add(Main.database.lookupProduct(intInput)); // The Part is appended to the results list.
+        } catch(NumberFormatException notInteger) {
+            resultsList = Main.database.lookupProduct(input);  // All parts containing the string are returned.
+        }
+
+        if(resultsList.size() > 0){
+            if(resultsList.get(0).getId() != 2000000000) {
+                products_table.getItems().setAll(resultsList);
+            }
+            else{
+                products_table.getItems().clear();
+            }
+        }
+        else {
+            products_table.getItems().clear();
+        }
+    }
+
     // Remove a selected part.
     public void removePart(){
         Part selectedPart = parts_table.getSelectionModel().getSelectedItem();
@@ -94,6 +120,14 @@ public class main_controller {
             Main.database.deletePart(selectedPart);
         }
         showAllParts();
+    }
+
+    public void removeProduct(){
+        Product selectedProduct = products_table.getSelectionModel().getSelectedItem();
+        if (Main.confirmationMessage("Are you sure you want to delete this part?")) {
+            Main.database.deleteProduct(selectedProduct);
+        }
+        showAllProducts();
     }
 
     // Open the Add Part popup window.
@@ -108,7 +142,7 @@ public class main_controller {
 
     public void modifyPartScreen() throws IOException {
         FXMLLoader loadFXML = new FXMLLoader(getClass().getResource("modifyPart_scene.fxml"));
-        modifyPart_Controller.selectedPartIndex = parts_table.getSelectionModel().getSelectedIndex();
+        modifyPart_Controller.selectedPart = parts_table.getSelectionModel().getSelectedItem();
         Parent root = (Parent) loadFXML.load();
         Stage stage = new Stage();
         stage.setScene(new Scene(root));
@@ -125,7 +159,15 @@ public class main_controller {
         stage.setOnHiding(event -> showAllProducts());  // Refreshes the parts table when the window is closed.
     }
 
-
+    public void modifyProductScreen() throws IOException {
+        FXMLLoader loadFXML = new FXMLLoader(getClass().getResource("modifyProduct_scene.fxml"));
+        modifyProduct_Controller.selectedProduct = products_table.getSelectionModel().getSelectedItem();
+        Parent root = (Parent) loadFXML.load();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.show();
+        stage.setOnHiding(event -> showAllProducts());  // Refreshes the parts table when the window is closed.
+    }
 
 
 

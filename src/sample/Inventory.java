@@ -55,11 +55,10 @@ public class Inventory {
                 return allProduct;
             }
         }
-        //TODO: return all products if no matches are found.
-        return allProducts.get(0);
+        // Return 2 billion.  If id = 2 billion, no results.
+        return new Product(2000000000, "No Parts Found", 0, 0, 0, 0);
     }
 
-    //TODO: have this return all products if no matches are found
     public ObservableList<Part> lookupPart(String partName){
         ObservableList<Part> resultsList = FXCollections.observableArrayList();
         for (Part allPart : allParts) {
@@ -70,11 +69,10 @@ public class Inventory {
         return resultsList;
     }
 
-    //TODO: have this return all products if no matches are found
     public ObservableList<Product> lookupProduct(String productName){
         ObservableList<Product> resultsList = FXCollections.observableArrayList();
         for (Product allProduct : allProducts){
-            if (allProduct.getName().contains(productName)){
+            if (matches(allProduct.getName(), productName)){
                 resultsList.add(allProduct);
             }
         }
@@ -94,7 +92,6 @@ public class Inventory {
         return true;
     }
 
-    //TODO: fix the return value here
     public boolean deleteProduct(Product selectedProduct){
         allProducts.remove(selectedProduct);
         return true;
