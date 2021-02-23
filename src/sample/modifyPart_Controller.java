@@ -22,11 +22,19 @@ public class modifyPart_Controller {
     @FXML private TextField partTypeField;
     @FXML private TextField idField;
 
-
+    /**
+     * @see main_controller modifyPartScreen() passes in the selected item from the Parts table to this variable.
+     */
     static Part selectedPart;
 
+    /**
+     * Used to store whether the part is Outsourced or In-House.
+     */
     private boolean partIsOutsourced = true;
 
+    /**
+     * Populate the form with data from selectedPart object.
+     */
     public void initialize(){
 
         if((selectedPart) instanceof InHouse){
@@ -62,6 +70,9 @@ public class modifyPart_Controller {
     Radio Buttons
      */
 
+    /**
+     * Called by pressing the radio button for Outsourced.
+     */
     public void setPartOutsourced(){
         if (!partIsOutsourced){
             partIsOutsourced = true;
@@ -69,6 +80,9 @@ public class modifyPart_Controller {
         this.locationLabel.setText("Company");
     }
 
+    /**
+     * Called by pressing the radio button for In-House
+     */
     public void setPartInHouse(){
         if (partIsOutsourced){
             partIsOutsourced = false;
@@ -80,11 +94,18 @@ public class modifyPart_Controller {
     /*
     Cancel and Save buttons
      */
+
+    /**
+     * Close the window.
+     */
     public void cancel(){
         Stage stage = (Stage) cancelButton.getScene().getWindow(); //Gets the window that the cancel button is in.
         stage.close(); // Makes the cancel button close the window.
     }
 
+    /** Save the selected part.
+     * Checks for user input errors before saving the selected part.
+     */
     public void savePart(){
         boolean partCanSave = true;
 

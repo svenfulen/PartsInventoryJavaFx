@@ -15,19 +15,19 @@
          <font>
             <Font size="14.0" />
          </font></Label>
-      <TextField fx:id="nameField" layoutX="119.0" layoutY="115.0" />
+      <TextField fx:id="name_field" layoutX="119.0" layoutY="115.0" />
       <Label layoutX="14.0" layoutY="14.0" style="-fx-font-weight: BOLD;" text="Add Part">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <RadioButton fx:id="radioInHouse" layoutX="53.0" layoutY="44.0" mnemonicParsing="false" onAction="#setPartInHouse" selected="true" text="In-House">
+      <RadioButton layoutX="53.0" layoutY="44.0" mnemonicParsing="false" onAction="#setPartInHouse" selected="true" text="In-House">
          <toggleGroup>
             <ToggleGroup fx:id="partType" />
          </toggleGroup></RadioButton>
-      <RadioButton fx:id="radioOutsourced" layoutX="180.0" layoutY="44.0" mnemonicParsing="false" onAction="#setPartOutsourced" text="Outsourced" toggleGroup="$partType" />
-      <TextField fx:id="invField" layoutX="119.0" layoutY="149.0" />
-      <TextField fx:id="priceField" layoutX="119.0" layoutY="184.0" />
+      <RadioButton layoutX="180.0" layoutY="44.0" mnemonicParsing="false" onAction="#setPartOutsourced" text="Outsourced" toggleGroup="$partType" />
+      <TextField fx:id="inv_field" layoutX="119.0" layoutY="149.0" />
+      <TextField fx:id="price_field" layoutX="119.0" layoutY="184.0" />
       <Label layoutX="90.0" layoutY="152.0" text="Inv">
          <font>
             <Font size="14.0" />
@@ -48,15 +48,15 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="minField" layoutX="119.0" layoutY="219.0" prefHeight="25.0" prefWidth="42.0" />
-      <TextField fx:id="maxField" layoutX="225.0" layoutY="219.0" prefHeight="25.0" prefWidth="42.0" />
-      <TextField fx:id="partTypeField" layoutX="119.0" layoutY="255.0" />
-      <Label fx:id="locationLabel" layoutX="40.0" layoutY="258.0" text="Machine ID">
+      <TextField fx:id="min_field" layoutX="119.0" layoutY="219.0" prefHeight="25.0" prefWidth="42.0" />
+      <TextField fx:id="max_field" layoutX="225.0" layoutY="219.0" prefHeight="25.0" prefWidth="42.0" />
+      <TextField fx:id="part_type_field" layoutX="119.0" layoutY="255.0" />
+      <Label fx:id="location_label" layoutX="40.0" layoutY="258.0" text="Machine ID">
          <font>
             <Font size="14.0" />
          </font>
       </Label>
       <Button fx:id="SavePart" layoutX="33.0" layoutY="323.0" mnemonicParsing="false" onAction="#savePart" text="Save" />
-      <Button fx:id="cancelButton" layoutX="86.0" layoutY="323.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+      <Button fx:id="cancel_button" layoutX="86.0" layoutY="323.0" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
    </children>
 </AnchorPane>

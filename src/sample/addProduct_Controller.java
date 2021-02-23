@@ -3,15 +3,13 @@ package sample;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
-import javafx.scene.control.Alert.AlertType;
 import javafx.fxml.FXML;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class addProduct_Controller {
-    /*
-    FXML signatures
-     */
+
+    // Buttons and Form Fields
     @FXML private Button cancel_button;
     @FXML private TextField product_name_field;
     @FXML private TextField product_inv_field;
@@ -27,7 +25,7 @@ public class addProduct_Controller {
     @FXML private TableColumn<Part, Integer> product_part_inv_column;
     @FXML private TableColumn<Part, Double> product_part_price_column;
 
-    //Associated Parts table
+    // Associated Parts table
     @FXML private TableView<Part> associated_part_table;
     @FXML private TableColumn<Part, Integer> associated_part_id_column;
     @FXML private TableColumn<Part, String> associated_part_name_column;
@@ -35,8 +33,11 @@ public class addProduct_Controller {
     @FXML private TableColumn<Part, Double> associated_part_price_column;
 
 
-    //Global list for associated parts.
+    /** Temporary list for Associated Parts form
+     * Held temporarily so that the user can add/remove the desired associated parts before saving.
+     */
     private ObservableList<Part> newAssociatedPartsList = FXCollections.observableArrayList();
+
 
     public void initialize(){
         showAllParts();  // Initialize the parts table.
@@ -48,12 +49,20 @@ public class addProduct_Controller {
     All parts & Associated Parts tables.
      */
 
-    //Handles the search bar for product screen.
+
+    /**
+     * Called when text is typed into the search bar.
+     * @see Inventory, lookupPart();
+     * Makes a resultsList and applies it to the Parts table.
+     */
     public void searchParts(){
-        String input = add_product_part_search.getText();  // The text that is input to the search bar.
+        // Get the text input into the search bar.
+        String input = add_product_part_search.getText();
+
+        // Create a list to hold search results.
         javafx.collections.ObservableList<Part> resultsList = FXCollections.observableArrayList();
 
-        // If the input text cannot be converted to an int, search by string.
+        // @exception If the input text cannot be converted to an int, search by string.
         try {
             int intInput = Integer.parseInt(input);
             resultsList.add(Main.database.lookupPart(intInput)); // The Part is appended to the results list.
@@ -61,107 +70,166 @@ public class addProduct_Controller {
             resultsList = Main.database.lookupPart(input);  // All parts containing the string are returned.
         }
 
+        // If there are items in the list.
         if(resultsList.size() > 0){
+            // If the index returned is not a dummy variable.
             if(resultsList.get(0).getId() != 2000000000) {
+                // Show all the search results.
                 add_product_part_table.getItems().setAll(resultsList);
             }
             else{
+                // No results were found, clear the list.
                 add_product_part_table.getItems().clear();
             }
         }
         else {
+            // No results were found, clear the list.
             add_product_part_table.getItems().clear();
         }
     }
 
-    //Handles all parts table for product screen.
+    /**
+     * Applies the list of parts in the database to the Parts table.
+     */
     private void showAllParts(){
+        // If there are no items in the table, this will be displayed.
         add_product_part_table.setPlaceholder(new Label("Part not found"));
+
+        //Set all the columns to take the correct types from Part objects.
         product_part_id_column.setCellValueFactory(new PropertyValueFactory<>("id"));  //Part ID column
         product_part_name_column.setCellValueFactory(new PropertyValueFactory<>("name"));  // Name column
         product_part_inv_column.setCellValueFactory(new PropertyValueFactory<>("stock"));  // Inv column
         product_part_price_column.setCellValueFactory(new PropertyValueFactory<>("price"));  // Price column
-        add_product_part_table.getItems().setAll(Main.database.getAllParts());  // Use the parts database to output to the table.
+
+        // Use the parts database to output to the table.
+        add_product_part_table.getItems().setAll(Main.database.getAllParts());
     }
 
-    //Handles associated parts table.
+    /**
+     * Applies the temporary list of Associated Parts to the Associated Parts table.
+     */
     private void showAllAssociatedParts(){
+        // If there are no items in the table, this will be displayed.
         associated_part_table.setPlaceholder(new Label("There are no parts associated with this product."));
+
+        //Set all the columns to take the correct types from Part objects.
         associated_part_id_column.setCellValueFactory(new PropertyValueFactory<>("id"));  //Part ID column
         associated_part_name_column.setCellValueFactory(new PropertyValueFactory<>("name"));  // Name column
         associated_part_inv_column.setCellValueFactory(new PropertyValueFactory<>("stock"));  // Inv column
         associated_part_price_column.setCellValueFactory(new PropertyValueFactory<>("price"));  // Price column
-        associated_part_table.getItems().setAll(newAssociatedPartsList);  // Use the parts database to output to the table.
+
+        // Use the parts database to output to the table.
+        associated_part_table.getItems().setAll(newAssociatedPartsList);
     }
 
-    //Handles adding a part from Parts table to Associated Parts table.
+    /**  Handles adding a part from Parts table to Associated Parts table.
+        FUTURE ENHANCEMENT: Be able to add a certain quantity of an associated part to the associated parts table.
+        For example, you could add 100 nails and a plastic box into a Box of 100 Nails Product.  */
     public void addAssociatedPart(){
+        //Add the selected item from the Parts list to the Associated Parts list.
         Part partToAdd = add_product_part_table.getSelectionModel().getSelectedItem();
         newAssociatedPartsList.add(partToAdd);
-        showAllAssociatedParts();  //Refresh the associated parts table.
+
+        //Refresh the associated parts table.
+        showAllAssociatedParts();
     }
 
-    //Handles removing a part from the Associated parts table.
+    /**
+     * Removes a selected part from the Associated Parts table.
+     */
     public void removeAssociatedPart(){
+        // Get the selected part, and remove it from the associated parts list.
         Part partToRemove = associated_part_table.getSelectionModel().getSelectedItem();
         newAssociatedPartsList.remove(partToRemove);
-        showAllAssociatedParts();  //Refresh the associated parts table.
+
+        //Refresh the associated parts table.
+        showAllAssociatedParts();
     }
 
 
     /*
     Product ID auto gen
     */
-    public static int nextProductId = Main.database.getAllProducts().size(); //The next part ID will be the size of all parts + 1.
+
+    // The next part ID will be the size of all parts + 1.
+    public static int nextProductId = Main.database.getAllProducts().size();
+
+    /** @return a product ID contiguous with the last product in the allProducts list.
+        FUTURE ENHANCEMENT: Be able to fill product IDs from products that were deleted.  */
     public static int autoGenProductId(){
         nextProductId++;
         return nextProductId;
     }
 
+
     /*
     Cancel and Save buttons
     */
+
+    /**
+     * Closes the window.
+     */
     public void cancel(){
-        Stage stage = (Stage) cancel_button.getScene().getWindow(); //Gets the window that the cancel button is in.
-        stage.close(); // Makes the cancel button close the window.
+        //Gets the window that the cancel button is in.
+        Stage stage = (Stage) cancel_button.getScene().getWindow();
+
+        // Makes the cancel button close the window.
+        stage.close();
     }
 
+    /**
+     * Saves a product to the database.
+     * Checks for errors in user input.
+     */
     public void saveProduct(){
+        // If an input error occurs, this value will be set to false and the product will not save.
         boolean productCanSave = true;
 
+        // Initializing variables that will later be filled and used as parameters.
         String partName = this.product_name_field.getText();
         int inStock = 0;
         double price = 0.0;
         int min = 0;
         int max = 0;
 
+        // Error checking for user input.
+
+        // @exception If the user enters a non-int into the stock field, do not save the product.
         try{ inStock = Integer.parseInt(this.product_inv_field.getText()); }
         catch(NumberFormatException notAnInt){
             productCanSave = false;
             Main.errorMessage("Please enter a number into the Inv field.");
         }
+
+        // @exception If the user enters a non-double into the price field, do not save the product.
         try{ price = Double.parseDouble(this.product_price_field.getText()); }
         catch(NumberFormatException | NullPointerException notADouble) {
             productCanSave = false;
             Main.errorMessage("Please enter a number into the Price/Cost field.");
         }
+
+        // @exception If the user enters a non-int into the min field, do not save the product.
         try{ min = Integer.parseInt(this.product_min_field.getText()); }
         catch(NumberFormatException notAnInt){
             productCanSave = false;
             Main.errorMessage("Please enter a number into the Min field.");
         }
+
+        // @exception If the user enters a non-int into the max field, do not save the product.
         try{ max = Integer.parseInt(this.product_max_field.getText()); }
         catch(NumberFormatException notAnInt){
             productCanSave = false;
             Main.errorMessage("Please enter a number into the Max field.");
         }
 
-        // Checking inv stuff.
+        // Checking if Min is less than Max.
         if (min > max) {
             productCanSave = false;
             Main.errorMessage("Max must be greater than Min.");
         }
 
+        // Checking if inStock is between Min and Max.
+        // FUTURE ENHANCEMENT: Allow user to enter in a value below the Min. (what if a part goes out of stock?)
         if (inStock < min | inStock > max) {
             productCanSave = false;
             Main.errorMessage("Inv must be between Min and Max values.");
@@ -169,14 +237,19 @@ public class addProduct_Controller {
 
         //This block can only execute if the form is filled out correctly.
         if(productCanSave){
+            // Creates a Product object to add to the database.
             Product newProduct = new Product(autoGenProductId(), partName, price, inStock, min, max);
-            // Adds all associated parts to the product.
-            for(int i = 0; i < newAssociatedPartsList.size(); i++){
-                newProduct.addAssociatedPart(newAssociatedPartsList.get(i));
+
+            // Adds all associated parts in the temporary list to the product's associated parts list.
+            for (Part part : newAssociatedPartsList) {
+                newProduct.addAssociatedPart(part);
             }
+
+            // Add the Product to the database.
             Main.database.addProduct(newProduct);
-            System.out.println("Successfully added Product");
-            cancel(); //closes the window
+
+            // Close the window.
+            cancel();
         }
     }
 

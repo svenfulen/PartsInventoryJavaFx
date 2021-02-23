@@ -1,23 +1,18 @@
 package sample;
 
 import java.io.IOException;
-
-import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class main_controller {
-    // Parts Controls
+    // Parts search bar
     @FXML private TextField part_search_bar;
-
     // Parts table
     @FXML private TableView<Part> parts_table;  //Makes the Parts table use Part objects.
     @FXML private TableColumn<Part, Integer> part_id_column;
@@ -25,9 +20,8 @@ public class main_controller {
     @FXML private TableColumn<Part, Integer> part_inv_column;
     @FXML private TableColumn<Part, Double> part_price_column;
 
-    //Products controls
+    //Products search bar
     @FXML private TextField product_search_bar;
-
     //Products table
     @FXML private TableView<Product> products_table;  //Makes the Products table use Product objects.
     @FXML private TableColumn<Product, Integer> product_id_column;
@@ -41,7 +35,9 @@ public class main_controller {
         showAllProducts();
     }
 
-    // Fill the Parts table with data.  Can be used to refresh the table.
+    /**
+     * Fill the parts table with data.  Can be called to refresh the parts table.
+     */
     public void showAllParts(){
         parts_table.setPlaceholder(new Label("Part not found"));
         part_id_column.setCellValueFactory(new PropertyValueFactory<>("id"));  //Part ID column
@@ -51,7 +47,9 @@ public class main_controller {
         parts_table.getItems().setAll(Main.database.getAllParts());  // Use the parts database to output to the table.
     }
 
-    // Fill the Products table with data.  Can be used to refresh the table.
+    /**
+     * Fill the products table with data.  Can be called to refresh the products table.
+     */
     public void showAllProducts(){
         products_table.setPlaceholder(new Label("Product not found"));
         product_id_column.setCellValueFactory(new PropertyValueFactory<>("id"));  //Product ID column
@@ -61,7 +59,9 @@ public class main_controller {
         products_table.getItems().setAll(Main.database.getAllProducts());  // Use the products database to output to the table.
     }
 
-    //Called when part is searched using the search bar.
+    /**
+     * @see Inventory Searches for parts in the allParts list.  Called when text is entered into the search bar.
+     */
     public void searchParts(){
         String input = part_search_bar.getText();  // The text that is input to the search bar.
         javafx.collections.ObservableList<Part> resultsList = FXCollections.observableArrayList();
@@ -87,7 +87,9 @@ public class main_controller {
         }
     }
 
-    //Called when product is searched using the search bar.
+    /**
+     * @see Inventory Searches for products in the allProducts list.  Called when text is entered into the search bar.
+     */
     public void searchProducts(){
         String input = product_search_bar.getText();  // The text that is input to the search bar.
         javafx.collections.ObservableList<Product> resultsList = FXCollections.observableArrayList();
@@ -113,7 +115,9 @@ public class main_controller {
         }
     }
 
-    // Remove a selected part.
+    /**
+     * Remove the selected item in the Parts table.
+     */
     public void removePart(){
         Part selectedPart = parts_table.getSelectionModel().getSelectedItem();
         if (selectedPart != null) {
@@ -124,6 +128,9 @@ public class main_controller {
         showAllParts();
     }
 
+    /**
+     * Remove the selected item in the Products table.
+     */
     public void removeProduct(){
         Product selectedProduct = products_table.getSelectionModel().getSelectedItem();
         if (selectedProduct != null) {
@@ -141,7 +148,10 @@ public class main_controller {
         showAllProducts();
     }
 
-    // Open the Add Part popup window.
+    /**
+     * Opens the Add Part window.
+     * @throws IOException
+     */
     public void addPartScreen() throws IOException {
         FXMLLoader loadFXML = new FXMLLoader(getClass().getResource("addPart_scene.fxml"));
         Parent root = (Parent) loadFXML.load();
@@ -151,7 +161,12 @@ public class main_controller {
         stage.setOnHiding(event -> showAllParts());  // Refreshes the parts table when the window is closed.
     }
 
-    //RUNTIME ERROR fixed by only completing function if selected not null
+    /**
+     * Opens the Modify Part window.
+     * RUNTIME ERROR: When no item is selected in the table, clicking the Modify button will cause the function to throw an error.
+     * fixed by only completing function if selectedPart not null
+     * @throws IOException if the window fails to open, throw an exception
+     */
     public void modifyPartScreen() throws IOException {
         Part selectedPart = parts_table.getSelectionModel().getSelectedItem();
         if (selectedPart != null) {
@@ -165,6 +180,10 @@ public class main_controller {
         }
     }
 
+    /**
+     * Open the Add Product window.
+     * @throws IOException if the window fails to open, throw an exception
+     */
     public void addProductScreen() throws IOException {
         FXMLLoader loadFXML = new FXMLLoader(getClass().getResource("addProduct_scene.fxml"));
         Parent root = (Parent) loadFXML.load();
@@ -174,7 +193,12 @@ public class main_controller {
         stage.setOnHiding(event -> showAllProducts());  // Refreshes the parts table when the window is closed.
     }
 
-    //RUNTIME ERROR fixed by only completing function if selected not null
+    /**
+     * Open the Modify Product screen.
+     * RUNTIME ERROR: When no item is selected in the table, clicking the Modify button will cause the function to throw an error.
+     * fixed by only completing function if selectedProduct not null
+     * @throws IOException if the window fails to open, throw an exception.
+     */
     public void modifyProductScreen() throws IOException {
         Product selectedProduct = products_table.getSelectionModel().getSelectedItem();
         if (selectedProduct != null) {
