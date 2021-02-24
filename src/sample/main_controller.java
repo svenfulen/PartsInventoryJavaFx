@@ -11,6 +11,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class main_controller {
+    // Exit button
+    @FXML private Button exit_button;
     // Parts search bar
     @FXML private TextField part_search_bar;
     // Parts table
@@ -135,9 +137,7 @@ public class main_controller {
         Product selectedProduct = products_table.getSelectionModel().getSelectedItem();
         if (selectedProduct != null) {
             if (selectedProduct.getAllAssociatedParts().size() > 0) {
-                if (Main.confirmationMessage("This product has parts associated. Are you sure you want to delete it?")) {
-                    Main.database.deleteProduct(selectedProduct);
-                }
+                Main.errorMessage("This product cannot be deleted because it has parts associated.");
             }
             else {
                 if (Main.confirmationMessage("Are you sure you want to delete this product?")) {
@@ -212,8 +212,13 @@ public class main_controller {
         }
     }
 
-
-
+    /**
+     * Close the window.
+     */
+    public void cancel(){
+        Stage stage = (Stage) exit_button.getScene().getWindow(); //Gets the window that the cancel button is in.
+        stage.close(); // Makes the cancel button close the window.
+    }
 
 }
 

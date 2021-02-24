@@ -43,6 +43,7 @@ public class modifyPart_Controller {
             radioInHouse.setSelected(true);
             radioOutsourced.setSelected(false);
             partTypeField.setText(String.valueOf(selectedMachineID));
+            locationLabel.setText("Machine ID");
         }
         if((selectedPart) instanceof Outsourced){
             String selectedCompanyName = ((Outsourced) selectedPart).getCompanyName();
@@ -50,6 +51,7 @@ public class modifyPart_Controller {
             radioInHouse.setSelected(false);
             radioOutsourced.setSelected(true);
             partTypeField.setText(selectedCompanyName);
+            locationLabel.setText("Company");
         }
         int selectedPartId = selectedPart.getId();
         String selectedPartName = selectedPart.getName();
