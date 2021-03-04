@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="true" type="Application" factoryName="Application" activateToolWindowBeforeRun="false">
+    <option name="ALTERNATIVE_JRE_PATH" value="BUNDLED" />
+    <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+    <option name="MAIN_CLASS_NAME" value="sample.Main" />
+    <module name="project" />
+    <selectedOptions>
+      <option name="redirectInput" />
+    </selectedOptions>
+    <option name="VM_PARAMETERS" value="--module-path ${PATH_TO_FX} --add-modules javafx.fxml,javafx.controls,javafx.graphics" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
